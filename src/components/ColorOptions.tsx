@@ -1,7 +1,8 @@
 "use client";
 
+import { Color, setColorCookie } from "@/app/action";
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 const colors = [
   {
@@ -32,8 +33,12 @@ const colors = [
 
 export default function ColorOptions() {
   const [selectedColor, setSelectedColor] = useState("");
+  useEffect(() => {
+    const color = localStorage.getItem("color") ?? "blue";
+    setSelectedColor(color);
+  }, []);
   return (
-    <div className="w-full max-w-md space-y-4 border p-4">
+    <div className="border-skin-border rounded-skin w-full max-w-md space-y-4 border p-4">
       <h1 className="text-2xl font-bold">Color</h1>
       <div className="flex justify-between gap-2">
         {colors.map((color) => (
@@ -58,14 +63,14 @@ function Option({
   setSelectedColor: Dispatch<SetStateAction<string>>;
 }) {
   const ref = useRef<HTMLInputElement | null>(null);
+  const onClick = async () => {
+    ref.current?.click();
+    ref.current?.focus();
+    localStorage.setItem("color", color.name);
+    await setColorCookie(color.name as Color);
+  };
   return (
-    <div
-      onClick={() => {
-        ref.current?.click();
-        ref.current?.focus();
-      }}
-      className="group relative size-8 cursor-pointer"
-    >
+    <div onClick={onClick} className="group relative size-8 cursor-pointer">
       <div
         style={{ background: color.code }}
         className="absolute top-1/2 left-1/2 size-12 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 transition-opacity duration-200 ease-linear group-hover:opacity-20"

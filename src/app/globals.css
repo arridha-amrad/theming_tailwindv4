@@ -1,9 +1,13 @@
 @import "tailwindcss";
 
 @theme {
+  --radius-skin: 0.5rem;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-skin-primary: var(--skin-primary);
+  --color-skin-border: var(--skin-border);
+  --color-skin-muted: var(--skin-muted);
+  --color-skin-error: var(--skin-error);
 }
 
 @layer base {
@@ -16,19 +20,30 @@
   }
 }
 
-:root {
+:root,
+html.light {
   --background: #ffffff;
   --foreground: #171717;
+  --skin-border: #e5e5e5;
+  --skin-muted: #737373;
+  --skin-error: oklch(0.577 0.245 27.325);
 }
 
-.dark {
+html.dark {
   --foreground: #ffffff;
   --background: #171717;
 }
 
-.dim {
+html.dim {
   --foreground: #ffffff;
   --background: #15202b;
+}
+
+html.dark,
+html.dim {
+  --skin-border: #404040;
+  --skin-muted: #737373;
+  --skin-error: #fb2c36;
 }
 
 .blue {
@@ -64,6 +79,16 @@
 .dim.green {
   --skin-primary: #00ba7c;
 } */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #ffffff;
+    --background: #171717;
+    --skin-muted: #737373;
+    --skin-error: #fb2c36;
+    --skin-border: #404040;
+  }
+}
 
 body {
   color: var(--foreground);

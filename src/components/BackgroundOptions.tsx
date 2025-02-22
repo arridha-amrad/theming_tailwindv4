@@ -1,8 +1,9 @@
 "use client";
 
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import cx from "clsx";
 import { CheckIcon } from "@heroicons/react/16/solid";
+import { Background, setBackgroundOnCookie } from "@/app/action";
 
 const bgColors = [
   {
@@ -21,8 +22,25 @@ const bgColors = [
 
 export default function BackgroundOptions() {
   const [bg, setBg] = useState("");
+
+  useEffect(() => {
+    const background = localStorage.getItem("background");
+    if (!background) {
+      const isPreferDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      if (isPreferDark) {
+        setBg("dark");
+      } else {
+        setBg("light");
+      }
+    } else {
+      setBg(background);
+    }
+  }, []);
+
   return (
-    <div className="my-4 w-full max-w-md space-y-4 border p-4">
+    <div className="rounded-skin border-skin-border my-4 w-full max-w-md space-y-4 border p-4">
       <h1 className="text-2xl font-bold">Background</h1>
       <div className="grid w-full grid-cols-3 gap-4">
         {bgColors.map((color) => (
@@ -44,14 +62,19 @@ const Option = ({
 }) => {
   const id = `bg-${color.name}`;
   const ref = useRef<HTMLInputElement | null>(null);
+
+  const onClick = async () => {
+    ref.current?.click();
+    ref.current?.focus();
+    localStorage.setItem("background", color.name.toLowerCase());
+    await setBackgroundOnCookie(color.name.toLowerCase() as Background);
+  };
+
   return (
     <div
-      onClick={() => {
-        ref.current?.click();
-        ref.current?.focus();
-      }}
+      onClick={onClick}
       style={{ background: color.code }}
-      className="flex items-start justify-start gap-2 rounded-lg py-4 pr-4 ring-blue-500 has-checked:ring-[3px]"
+      className="border-skin-border ring-skin-primary flex items-start justify-start gap-2 rounded-lg border py-4 pr-4 has-checked:ring-[3px]"
     >
       <div className="relative grid place-items-center px-4">
         <input
@@ -71,7 +94,7 @@ const Option = ({
           className={cx(
             "pointer-events-none",
             "col-start-1 row-start-1",
-            "size-5 rounded-full peer-checked:bg-blue-500",
+            "peer-checked:bg-skin-primary size-5 rounded-full",
             "peer-checked:peer-disabled:bg-gray-400",
           )}
         />

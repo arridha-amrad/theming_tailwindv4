@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cookies } from "next/headers";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,14 +25,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookie = await cookies();
-  const dataColor = cookie.get("data-color")?.value ?? "blue";
-  const dataBg = cookie.get("data-bg")?.value ?? "dark";
+  const bg = JSON.parse(cookie.get("preferences")?.value ?? "{}").background;
+  const color =
+    JSON.parse(cookie.get("preferences")?.value ?? "{}").color ?? "blue";
+
   return (
-    <html lang="en" className={`${dataColor} ${dataBg}`}>
+    <html lang="en" className={`${color} ${bg}`}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

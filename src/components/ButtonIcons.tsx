@@ -25,7 +25,7 @@ export default function ButtonIcons() {
 
 const ButtonIcon = ({ children }: { children: ReactNode }) => {
   return (
-    <button className="flex size-9 cursor-pointer items-center justify-center rounded-full bg-neutral-500">
+    <button className="text-skin-primary hover:bg-skin-primary/20 focus:bg-skin-primary/20 flex size-9 cursor-pointer items-center justify-center rounded-full transition-all duration-200 ease-in outline-none">
       {children}
     </button>
   );

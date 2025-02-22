@@ -2,11 +2,18 @@
 
 import { cookies } from "next/headers";
 
-type Background = "dim" | "light" | "dark";
+export type Background = "dim" | "light" | "dark";
+export type Color = "blue" | "yellow" | "green" | "pink" | "purple" | "orange";
 
-export const setBackgroundCookie = async (bg: Background) => {
+export const setBackgroundOnCookie = async (bg: Background) => {
   const cookie = await cookies();
-  cookie.set("data-bg", bg, {
+  const prefCookie = cookie.get("preferences")?.value ?? "{}";
+  const parsed = JSON.parse(prefCookie);
+  const newData = {
+    ...parsed,
+    background: bg,
+  };
+  cookie.set("preferences", JSON.stringify(newData), {
     httpOnly: true,
     maxAge: 999999,
     sameSite: "lax",
@@ -14,11 +21,15 @@ export const setBackgroundCookie = async (bg: Background) => {
   });
 };
 
-type Color = "blue" | "yellow" | "green";
-
 export const setColorCookie = async (color: Color) => {
   const cookie = await cookies();
-  cookie.set("data-color", color, {
+  const prefCookie = cookie.get("preferences")?.value ?? "{}";
+  const parsed = JSON.parse(prefCookie);
+  const newData = {
+    ...parsed,
+    color,
+  };
+  cookie.set("preferences", JSON.stringify(newData), {
     httpOnly: true,
     maxAge: 999999,
     sameSite: "lax",

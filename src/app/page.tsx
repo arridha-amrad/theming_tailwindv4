@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <main className="container mx-auto p-4">
-      <div className="w-full max-w-md space-y-4 rounded-lg border p-6">
+      <div className="rounded-skin border-skin-border w-full max-w-md space-y-4 border p-6">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight">Login</h1>
         </div>
