@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-skin-primary: var(--skin-primary);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+.dark {
+  --foreground: #ffffff;
+  --background: #171717;
+}
+
+.dim {
+  --foreground: #ffffff;
+  --background: #15202b;
+}
+
+.blue {
+  --skin-primary: #1d9bf0;
+}
+.yellow {
+  --skin-primary: #ffd400;
+}
+.pink {
+  --skin-primary: #f91880;
+}
+.purple {
+  --skin-primary: #7856ff;
+}
+.orange {
+  --skin-primary: #ff7a00;
+}
+.green {
+  --skin-primary: #00ba7c;
+}
+
+/* .dark.blue,
+.dim.blue {
+  --skin-primary: #1d9bf0;
+}
+
+.dark.yellow,
+.dim.yellow {
+  --skin-primary: #ffd400;
+}
+
+.dark.green,
+.dim.green {
+  --skin-primary: #00ba7c;
+} */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-geist-sans);
+}
