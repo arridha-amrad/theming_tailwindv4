@@ -23,8 +23,8 @@ export default function Page() {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim sint
           consectetur a blanditiis fugiat repudiandae aspernatur repellat
           cupiditate ipsam impedit?&nbsp;
-          <Link className="text-blue-500" href="/">
-            Read more
+          <Link className="text-skin-primary" href="/">
+            Read more...
           </Link>
         </p>
       </div>
